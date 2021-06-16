@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "ve's-jupyter-playground"
+version = "0.1.0"
+description = ""
+authors = ["vvveracruz <login@vgg.cz>"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+ipython = "^7.24.1"
+jupyter = "^1.0.0"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
