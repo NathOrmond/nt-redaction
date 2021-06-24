@@ -1,6 +1,9 @@
 <template>
   <div class="container">
     <div>
+      <nav-bar />
+    </div>
+    <div>
       <Logo />
       <h1 class="title">New Testament Redaction Calculator</h1>
       <div class="links">
@@ -27,8 +30,13 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import NavBar from '@/components/NavBar.vue'
 
-export default Vue.extend({})
+export default Vue.extend({
+  components: { 
+    NavBar 
+  }
+})
 </script>
 
 <style>
