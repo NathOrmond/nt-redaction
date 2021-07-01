@@ -36,8 +36,6 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.nav_container{
-  // TODO
-}
+<style scoped>
+
 </style>

@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<a>{{label}}</a>
+		<nuxt-link to="link_url">{{label}}</nuxt-link>
 	</div>
 </template>
 
@@ -20,6 +20,6 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style  scoped>
 
 </style>
