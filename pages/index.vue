@@ -1,7 +1,11 @@
 <template>
   <div class="container">
     <div class="container__nav">
-      <nav-bar />
+      <nav-bar
+      :nav_elements=""
+      :logo_title=""
+      :logo_sub_title="" 
+      />
     </div>
     <div class="container__textarea">
       <text-area 
