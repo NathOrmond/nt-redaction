@@ -1,41 +1,47 @@
 <template>
   <div class="nav_container">
-    <nav-logo
-    :title="logo_title"
-    :sub_title="logo_sub_title"
-    />
-    <nav class="nav">
-      <nav-element 
-      v-for="element in nav_elements" 
-      :key="element"
-      :label="element.label" 
-      :link_url="element.link_url" />
-    </nav>
+    <nuxt-link class="nav_element" to="">{{data.pages.home.navigation.label}}</nuxt-link>
+    <nuxt-link class="nav_element" to="">{{data.pages.leventshine_calculator.navigation.label}}</nuxt-link>
+    <nuxt-link class="nav_element" to="">{{data.pages.gospel_parallels.navigation.label}}</nuxt-link>
   </div>
 </template>
 
 <script lang="ts">
-import NavLogo from '@/components/navigation/NavLogo.vue'
-import NavElement from '@/components/navigation/NavElement.vue'
+import siteData from '~/resources/siteData.json';
 
 export default {
   name: 'NavBar',
   components: {
-    NavLogo,
-    NavElement,
+    // Not used
+  },
+  mounted() {
+    console.log("Nav bar mounted")
+    console.log(this.data)
   },
   props: {
-    logo_title: {type: String, required: true},
-    logo_sub_title: {type: String, required:true},
-    nav_elements: {type:Array, required: true}
+    // Not Used
   },
   data() {
     return {
+      data: siteData
     };
   },
 };
 </script>
 
 <style scoped>
-
+.nav_container { 
+  border: 1px solid green;
+  display: flex;
+  padding: 5px;
+  margin: 5px;
+}
+.nav_element{ 
+  border: 1px solid blue;
+  flex-direction: row;
+  white-space: nowrap;
+  overflow: hidden;
+  padding: 5px;
+  margin: 5px;
+}
 </style>

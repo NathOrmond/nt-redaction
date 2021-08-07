@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<nuxt-link to="link_url">{{label}}</nuxt-link>
+		<nuxt-link to="">{{label}}</nuxt-link>
 	</div>
 </template>
 
@@ -10,8 +10,14 @@ export default {
   components: {
   },
 	props: {
-		label: { type:String, required: true},
-		link_url: { type: String, required: false}
+		label: { 
+      type:String, 
+      required: true
+    },
+		link_url: { 
+      type: String, 
+      required: false
+    }
 	},
   data() {
     return {
