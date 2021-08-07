@@ -1,11 +1,7 @@
 <template>
   <div class="container">
     <div class="container__nav">
-      <nav-bar
-      :nav_elements=""
-      :logo_title=""
-      :logo_sub_title="" 
-      />
+      <nav-bar />
     </div>
     <div class="container__textarea">
       <text-area 
@@ -22,6 +18,7 @@
 import Vue from 'vue';
 import NavBar from '@/components/navigation/NavBar.vue';
 import TextArea from '@/components/text/TextArea.vue';
+import textData from '../resources/text.json';
 
 export default Vue.extend({
   components: {
@@ -35,7 +32,8 @@ export default Vue.extend({
       navElements: [],
       textTitle: 'Title',
       textSubTitle: 'SubTitle Goes Here',
-      textBody: 'Lorem Ipsum Id Quo Nihil Maius Cogitari Potest Et Hoc Omnes Intelligent Deum Amor Vincit Omnia Et Nos Cedamus Amori'
+      textBody: '',
+      data: textData
     }
   }
 });
