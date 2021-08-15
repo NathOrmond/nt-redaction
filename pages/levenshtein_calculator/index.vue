@@ -1,22 +1,23 @@
 <template>
   <div class="flex_container">
+
     <div class="container_navigation">
       <nav-bar />
     </div>
     <div class="container_body">
-      <h1>{{ data.pages.home.heading }}</h1>
-      <p>{{ data.pages.home.about}}</p>
+      <h1>Levenshtein Distance Calculator Page</h1>
+      <p>Under Construction...</p>
     </div>
     <div class="container_footer">
       <pagefooter />
     </div>
+
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import NavBar from '~/components/navigation/NavBar.vue';
-import siteData from '~/resources/siteData.json';
 import Pagefooter from '~/components/footer/Pagefooter.vue';
 
 export default Vue.extend({
@@ -24,17 +25,10 @@ export default Vue.extend({
     NavBar,
     Pagefooter
   },
-  mounted(){ 
-    // Not used for now
-  },
-  computed: {
-    // Not used for now
-  },
   data(){
-    return{
-      data: siteData
-    }
-  }
+    return{  }
+  },
+  methods: {  }
 });
 </script>
 
