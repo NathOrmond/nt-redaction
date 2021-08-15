@@ -1,24 +1,24 @@
 {
 	"meta": {
-		"contributors": ["Ian Mills", "Nathan Ormond", "Ve Gomez"], 
-		"license": {"name": "MIT License", "link": "https://wwww.google.com"},
+		"contributors": ["Ian Mills", "Nathan Ormond", "Veracruz Gomez"], 
+		"license": {"name": "MIT License", "link": "https://opensource.org/licenses/MIT"},
 		"title": "NTSH",
-		"sub-title": "New Testament Studies Helper"
+		"sub_title": "New Testament Studies Helper"
 	},
 	"pages": {
 		"home": {
 			"navigation": {
-				"label": "home", 
-				"link_url": "home"
+				"label": "Home", 
+				"link_url": "/"
 			},
 			"heading": "New Testament Studies Helper",
 			"about": "Welcome to the New Testament studies helper site. This site contains several tools which we hope you will find useful for studying the New Testament texts!",
 			"contributionlink": "https://www.google.com"
 		}, 
-		"leventshine_calculator": {
+		"levenshtein_calculator": {
 			"navigation": {
-				"label": "leventshine-calculator", 
-				"link_url": "levelntshine-calculator"
+				"label": "Levenshtein Calculator", 
+				"link_url": "/levenshtein_calculator"
 			},
 			"input": {			
 				"about": "TODO",
@@ -30,8 +30,8 @@
 		},
 		"gospel_parallels": {
 			"navigation": { 
-				"label": "gospel-parallels", 
-				"link_url": "gospel-parallels"
+				"label": "Gospel Parallels", 
+				"link_url": "/gospel_parallels"
 			},
 			"TODO": "TODO"
 		}
