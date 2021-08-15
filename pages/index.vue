@@ -8,7 +8,7 @@
       <p>{{ data.pages.home.about}}</p>
     </div>
     <div class="container_footer">
-      <footer />
+      <pagefooter />
     </div>
   </div>
 </template>
@@ -16,13 +16,13 @@
 <script lang="ts">
 import Vue from 'vue';
 import NavBar from '~/components/navigation/NavBar.vue';
-import Footer from '~/components/footer/PageFooterComponent.vue'
 import siteData from '~/resources/siteData.json';
+import Pagefooter from '~/components/footer/Pagefooter.vue';
 
 export default Vue.extend({
   components: {
     NavBar,
-    Footer
+    Pagefooter
   },
   mounted(){ 
     // Not used for now
