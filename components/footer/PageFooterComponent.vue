@@ -1,7 +1,8 @@
 <template>
 	<div class="footer">
-		<!-- TODO Footer with relevant info -->
-    <p>TODO: Footer stuff goes here</p>
+		
+    
+
 	</div>
 </template>
 
@@ -9,7 +10,7 @@
 import siteData from '~/resources/siteData.json';
 
 export default {
-  name: 'Footer',
+  name: 'PageFooterComponent',
   components: {
   },
   mounted() {

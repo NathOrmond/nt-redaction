@@ -16,7 +16,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import NavBar from '~/components/navigation/NavBar.vue';
-import Footer from '~/components/footer/Footer.vue'
+import Footer from '~/components/footer/PageFooterComponent.vue'
 import siteData from '~/resources/siteData.json';
 
 export default Vue.extend({
