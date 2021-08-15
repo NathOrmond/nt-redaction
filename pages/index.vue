@@ -1,75 +1,80 @@
 <template>
-  <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">New Testament Redaction Calculator</h1>
-      <div class="links">
-        <a
-          href="https://github.com/NathOrmond/nt-redaction/projects/1"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Project Tasks
-        </a>
-        <a
-          href="https://github.com/NathOrmond/nt-redaction"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
+  <div class="flex_container">
+    <div class="container_navigation">
+      <nav-bar />
+    </div>
+    <div class="container_body">
+      <h1>{{ data.pages.home.heading }}</h1>
+      <p>{{ data.pages.home.about}}</p>
+    </div>
+    <div class="container_footer">
+      <pagefooter />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue from 'vue';
+import NavBar from '~/components/navigation/NavBar.vue';
+import siteData from '~/resources/siteData.json';
+import Pagefooter from '~/components/footer/Pagefooter.vue';
 
-export default Vue.extend({})
+export default Vue.extend({
+  components: {
+    NavBar,
+    Pagefooter
+  },
+  mounted(){ 
+    // Not used for now
+  },
+  computed: {
+    // Not used for now
+  },
+  data(){
+    return{
+      data: siteData
+    }
+  }
+});
 </script>
 
-<style>
-.container {
-  margin: 150px auto;
-  min-height: 100vh;
+<style scoped>
+
+.flex_container{ 
+  border: 1px solid yellow;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
+  padding: 1%;
+  margin: 2%, 2%, 2%, 2%;
+  width: 100%;
 }
 
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-  padding-bottom: 25px;
-  margin: 10px;
-}
-
-.paragraph {
-  text-align: left;
+.container_navigation{
+  border: 1px solid purple;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
   margin: 5px;
-  margin-left: 40px;
-  margin-right: 40px;
-  padding: 10px;
+  width: 100%;
+}
+
+.container_body{
+  border: 1px solid red;
+  flex-direction: column;
+  padding: 5px;
+  margin: 5px;
+  width: 100%;
+}
+
+.container_footer{
+   border: 1px solid fuchsia;
+  flex-direction: row;
+  padding: 5px;
+  margin: 5px;
+  margin-top: auto;
+  width: 100%;
 }
 </style>
