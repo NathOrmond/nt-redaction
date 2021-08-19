@@ -4,13 +4,13 @@
     <div class="container_navigation">
       <nav-bar />
     </div>
-    
-    <div>
-        <h1>Gospel Parallels Page</h1>
-        <p>Under Construction...</p>
-    </div>
 
-     <div class="container_footer">
+    <div class="container_body">
+      <h1>Gospel Parallels</h1>
+      <p>Under Construction...</p>
+    </div>
+    
+    <div class="container_footer">
       <pagefooter />
     </div>
 
@@ -23,24 +23,15 @@ import NavBar from '~/components/navigation/NavBar.vue';
 import Pagefooter from '~/components/footer/Pagefooter.vue';
 
 export default Vue.extend({
+  layout: 'default',
   components: {
     NavBar,
     Pagefooter
   },
   data(){
-    return{
-      id: this.$route.params.redactioncalculator,
-      calculated: false
-    }
+    return{  }
   },
-  methods: {
-    isCalculated(): boolean{ 
-      return this.calculated;
-    },
-    setCalculated(newValue: boolean): void { 
-      this.calculated = newValue;
-    }
-  }
+  methods: {  }
 });
 </script>
 
@@ -49,23 +40,27 @@ export default Vue.extend({
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  padding: 1px;
-  margin: 1px;
+  align-items: center stretch;
+  align-content: stretch;
+  padding: 0px;
+  margin: 0px;
   width: 100%;
+  height: 100%;
 }
 
 .container_navigation{
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 1px;
-  margin: 1px;
+  padding: 0px;
+  margin: 0px;
   width: 100%;
 }
 
 .container_body{
   flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
   padding: 2%;
   margin: auto;
   width: 100%;
@@ -73,6 +68,8 @@ export default Vue.extend({
 
 .container_footer{
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
   padding: 1px;
   margin: 1px;
   width: 100%;
