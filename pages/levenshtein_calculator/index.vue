@@ -21,6 +21,7 @@ import NavBar from '~/components/navigation/NavBar.vue';
 import Pagefooter from '~/components/footer/Pagefooter.vue';
 
 export default Vue.extend({
+  layout: 'default',
   components: {
     NavBar,
     Pagefooter
@@ -37,23 +38,27 @@ export default Vue.extend({
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  padding: 1px;
-  margin: 1px;
+  align-items: center stretch;
+  align-content: stretch;
+  padding: 0px;
+  margin: 0px;
   width: 100%;
+  height: 100%;
 }
 
 .container_navigation{
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 1px;
-  margin: 1px;
+  padding: 0px;
+  margin: 0px;
   width: 100%;
 }
 
 .container_body{
   flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
   padding: 2%;
   margin: auto;
   width: 100%;
@@ -61,6 +66,8 @@ export default Vue.extend({
 
 .container_footer{
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
   padding: 1px;
   margin: 1px;
   width: 100%;
