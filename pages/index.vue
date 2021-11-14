@@ -5,7 +5,8 @@
       <nav-bar />
     </div>
     
-    <div class="container_body">
+    <div 
+    class="container_body">
       <h1>{{ data.pages.home.heading }}</h1>
       <p>{{ data.pages.home.about}}</p>
     </div>
