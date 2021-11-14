@@ -5,8 +5,62 @@
       <nav-bar />
     </div>
     <div class="container_body">
-      <h1>Levenshtein Distance Calculator Page</h1>
-      <p>Under Construction...</p>
+      <h1>Levenshtein Distance Calculator</h1>
+      <div
+      v-if="!display" 
+      class="selection_area">
+        <div class="selection_area_boxes">
+          <div class="selection_box">
+            <p>Select First Manuscript:</p>
+
+            <select v-model="mss1Selection">
+              <option v-for="(element, index) in availableTexts" v-bind:value="element" :key="index" >
+                {{element}}
+              </option>
+            </select>
+
+          </div>
+          <div clas="selection_box">
+            <p>Select Second Manuscript:</p>
+            
+            <select v-model="mss2Selection">
+              <option v-for="(element, index) in availableTexts" v-bind:value="element" :key="index" >
+                {{element}}
+              </option>
+            </select>
+
+          </div>
+        </div>
+        <button
+        v-on:click="invertDisplay"
+        >Confirm Selection</button>
+      </div>
+      <div
+      v-else 
+      class="results_area">
+        <h2>Table of Calculated Distances</h2>
+        <table>
+          <tr>
+           <th></th>
+           <th>{{mss1Selection}}</th>
+            <th>{{mss2Selection}}</th>
+         </tr>
+          <tr>
+            <th>{{mss1Selection}}</th>
+            <td>{{calculatedResponse.levenshtein.values[mss1Selection][mss1Selection]}}</td>
+            <td>{{calculatedResponse.levenshtein.values[mss2Selection][mss1Selection]}}</td>
+         </tr>
+         <tr>
+           <th>{{mss2Selection}}</th>
+           <td>{{calculatedResponse.levenshtein.values[mss2Selection][mss1Selection]}}</td>
+           <td>{{calculatedResponse.levenshtein.values[mss2Selection][mss2Selection]}}</td>
+          </tr>
+        </table>
+        <button
+        v-on:click="invertDisplay"
+        >Run Again</button> 
+      </div>
+
     </div>
     <div class="container_footer">
       <pagefooter />
@@ -27,13 +81,73 @@ export default Vue.extend({
     Pagefooter
   },
   data(){
-    return{  }
+    return{ 
+      display : false,
+      availableTexts: null, 
+      mss1Selection: '',
+      mss2Selection: '', 
+      calculatedResponse: null
+     }
   },
-  methods: {  }
+  async mounted() {
+    this.availableTexts = await this.getAvailableTexts()
+  },
+  methods: { 
+    async invertDisplay(){ 
+      if(!this.display){
+        // TODO some processing to check valid selection of mss
+        let response = await fetch(`https://nt-redaction-api.herokuapp.com/levenshtein?mss1=${this.mss1Selection}&mss2=${this.mss2Selection}`);
+        let json = await response.json()
+        console.log(json?.manuscripts)
+        this.calculatedResponse = json
+        this.display = !this.display
+      } else {
+        this.calculatedResponse = null
+        this.display = !this.display
+      }
+    },
+    async getAvailableTexts() { 
+      let response = await fetch("https://nt-redaction-api.herokuapp.com/texts");
+      let json = await response.json()
+      console.log(json?.manuscripts)
+      return json?.manuscripts
+    }
+  }
 });
 </script>
 
 <style scoped>
+
+.selection_area{
+  justify-content: center;
+  align-items: center;
+}
+
+.selection_area_boxes{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.selection_box{
+  flex-direction: row;
+}
+
+p {
+  padding: 5px;
+  margin: 10px;
+}
+
+button:hover { 
+  background: mediumseagreen;
+}
+
+button { 
+  padding: 10px;
+  margin: 10px;
+}
+
 .flex_container{ 
   display: flex;
   flex-direction: column;
