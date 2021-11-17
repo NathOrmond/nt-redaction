@@ -9,32 +9,35 @@
       <div
       v-if="!display" 
       class="selection_area">
+
         <div class="selection_area_boxes">
+
           <div class="selection_box">
             <p>Select First Manuscript:</p>
-
             <select v-model="mss1Selection">
               <option v-for="(element, index) in availableTexts" v-bind:value="element" :key="index" >
                 {{element}}
               </option>
             </select>
-
           </div>
-          <div clas="selection_box">
+
+          <div class="selection_box">
             <p>Select Second Manuscript:</p>
-            
             <select v-model="mss2Selection">
               <option v-for="(element, index) in availableTexts" v-bind:value="element" :key="index" >
                 {{element}}
               </option>
             </select>
-
           </div>
+
         </div>
+
         <button
         v-on:click="invertDisplay"
-        >Confirm Selection</button>
+        >Confirm Selection
+        </button>
       </div>
+
       <div
       v-else 
       class="results_area">
@@ -118,6 +121,26 @@ export default Vue.extend({
 
 <style scoped>
 
+table {
+  width: 100%;
+}
+
+table, th, td {
+  border: 2px solid black;
+  padding: 2px;
+  margin: 5px;
+  text-align: center;
+  font-size: 14px;
+}
+
+tr:hover {
+  background-color: lightgray;
+}
+
+td:hover {
+  background-color: lightgreen;
+}
+
 .selection_area{
   justify-content: center;
   align-items: center;
@@ -132,6 +155,21 @@ export default Vue.extend({
 
 .selection_box{
   flex-direction: row;
+  margin: 5px;
+  padding: 2px;
+  border: 2px solid black;
+}
+
+select{
+  padding: 2px;
+  margin: 15px;
+  width: 90%;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: inherit;
+  font-size: 14px;
+  line-height: inherit;
+
 }
 
 p {
@@ -171,7 +209,7 @@ button {
 
 .container_body{
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   padding: 2%;
   margin: auto;
