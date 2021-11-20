@@ -30,6 +30,15 @@
             </select>
           </div>
 
+          <div class="selection_box">
+            <p>Select Third Manuscript:</p>
+            <select v-model="mss3Selection">
+              <option v-for="(element, index) in availableTexts" v-bind:value="element" :key="index" >
+                {{element}}
+              </option>
+            </select>
+          </div>
+
         </div>
 
         <div class="display_texts">
@@ -44,6 +53,12 @@
                {{mss2Selection}}
              </h4>
             <p>{{mss2Text}}</p>
+          </div>
+          <div class="display_text">
+             <h4>
+               {{mss3Selection}}
+             </h4>
+            <p>{{mss3Text}}</p>
           </div>
         </div>
 
@@ -64,17 +79,26 @@
           <tr>
            <th></th>
            <th>{{mss1Selection}}</th>
-            <th>{{mss2Selection}}</th>
+           <th>{{mss2Selection}}</th>
+           <th>{{mss3Selection}}</th>
          </tr>
           <tr>
             <th>{{mss1Selection}}</th>
             <td>{{calculatedResponse.levenshtein.values[mss1Selection][mss1Selection]}}</td>
-            <td>{{calculatedResponse.levenshtein.values[mss2Selection][mss1Selection]}}</td>
+            <td>{{calculatedResponse.levenshtein.values[mss1Selection][mss2Selection]}}</td>
+            <td>{{calculatedResponse.levenshtein.values[mss1Selection][mss3Selection]}}</td>
          </tr>
          <tr>
            <th>{{mss2Selection}}</th>
            <td>{{calculatedResponse.levenshtein.values[mss2Selection][mss1Selection]}}</td>
            <td>{{calculatedResponse.levenshtein.values[mss2Selection][mss2Selection]}}</td>
+           <td>{{calculatedResponse.levenshtein.values[mss2Selection][mss3Selection]}}</td>
+          </tr>
+          <tr>
+            <th>{{mss2Selection}}</th>
+            <td>{{calculatedResponse.levenshtein.values[mss3Selection][mss1Selection]}}</td>
+            <td>{{calculatedResponse.levenshtein.values[mss3Selection][mss2Selection]}}</td>
+            <td>{{calculatedResponse.levenshtein.values[mss3Selection][mss3Selection]}}</td>
           </tr>
         </table>
 
@@ -90,6 +114,12 @@
                {{mss2Selection}}
              </h4>
             <p>{{mss2Text}}</p>
+          </div>
+          <div class="display_text">
+             <h4>
+               {{mss3Selection}}
+             </h4>
+            <p>{{mss3Text}}</p>
           </div>
         </div>
 
@@ -125,8 +155,10 @@ export default Vue.extend({
       availableTexts: null, 
       mss1Selection: '',
       mss2Selection: '', 
+      mss3Selection: '',
       mss1Text: '',
       mss2Text: '',
+      mss3Text:'',
       calculatedResponse: null
      }
   },
@@ -145,14 +177,21 @@ export default Vue.extend({
       let json = await response.json()
       // console.log(json?.contents)
       this.mss2Text = json?.contents
+    },
+     mss3Selection: async function(newValue, oldValue) {
+      let response = await fetch(`https://nt-redaction-api.herokuapp.com/display?mss=${this.mss3Selection}`);
+      let json = await response.json()
+      // console.log(json?.contents)
+      this.mss3Text = json?.contents
     }
   },
   methods: { 
     async invertDisplay(){ 
       if(!this.display){
         // TODO some processing to check valid selection of mss
-        let response = await fetch(`https://nt-redaction-api.herokuapp.com/levenshtein?mss1=${this.mss1Selection}&mss2=${this.mss2Selection}`);
+        let response = await fetch(`https://nt-redaction-api.herokuapp.com/levenshtein?mss1=${this.mss1Selection}&mss2=${this.mss2Selection}&mss3=${this.mss3Selection}`);
         let json = await response.json()
+
         // console.log(json?.manuscripts)
         this.calculatedResponse = json
 
@@ -202,7 +241,7 @@ table, th, td {
   font-size: 14px;
 }
 
-tr:hover {
+th { 
   background-color: lightgray;
 }
 
