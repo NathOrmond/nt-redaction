@@ -30,12 +30,45 @@
             </select>
           </div>
 
+          <div class="selection_box">
+            <p>Select Third Manuscript:</p>
+            <select v-model="mss3Selection">
+              <option v-for="(element, index) in availableTexts" v-bind:value="element" :key="index" >
+                {{element}}
+              </option>
+            </select>
+          </div>
+
         </div>
 
-        <button
-        v-on:click="invertDisplay"
-        >Confirm Selection
-        </button>
+        <div class="display_texts">
+          <div class="display_text">
+            <h4>
+              {{mss1Selection}}
+            </h4>
+            <p>{{mss1Text}}</p>
+          </div>
+           <div class="display_text">
+             <h4>
+               {{mss2Selection}}
+             </h4>
+            <p>{{mss2Text}}</p>
+          </div>
+          <div class="display_text">
+             <h4>
+               {{mss3Selection}}
+             </h4>
+            <p>{{mss3Text}}</p>
+          </div>
+        </div>
+
+
+        <div class="invert_button">
+          <button
+          v-on:click="invertDisplay"
+          >Confirm Selection
+          </button>
+        </div>
       </div>
 
       <div
@@ -46,22 +79,55 @@
           <tr>
            <th></th>
            <th>{{mss1Selection}}</th>
-            <th>{{mss2Selection}}</th>
+           <th>{{mss2Selection}}</th>
+           <th>{{mss3Selection}}</th>
          </tr>
           <tr>
             <th>{{mss1Selection}}</th>
             <td>{{calculatedResponse.levenshtein.values[mss1Selection][mss1Selection]}}</td>
-            <td>{{calculatedResponse.levenshtein.values[mss2Selection][mss1Selection]}}</td>
+            <td>{{calculatedResponse.levenshtein.values[mss1Selection][mss2Selection]}}</td>
+            <td>{{calculatedResponse.levenshtein.values[mss1Selection][mss3Selection]}}</td>
          </tr>
          <tr>
            <th>{{mss2Selection}}</th>
            <td>{{calculatedResponse.levenshtein.values[mss2Selection][mss1Selection]}}</td>
            <td>{{calculatedResponse.levenshtein.values[mss2Selection][mss2Selection]}}</td>
+           <td>{{calculatedResponse.levenshtein.values[mss2Selection][mss3Selection]}}</td>
+          </tr>
+          <tr>
+            <th>{{mss2Selection}}</th>
+            <td>{{calculatedResponse.levenshtein.values[mss3Selection][mss1Selection]}}</td>
+            <td>{{calculatedResponse.levenshtein.values[mss3Selection][mss2Selection]}}</td>
+            <td>{{calculatedResponse.levenshtein.values[mss3Selection][mss3Selection]}}</td>
           </tr>
         </table>
-        <button
-        v-on:click="invertDisplay"
-        >Run Again</button> 
+
+        <div class="display_texts">
+          <div class="display_text">
+            <h4>
+              {{mss1Selection}}
+            </h4>
+            <p>{{mss1Text}}</p>
+          </div>
+           <div class="display_text">
+             <h4>
+               {{mss2Selection}}
+             </h4>
+            <p>{{mss2Text}}</p>
+          </div>
+          <div class="display_text">
+             <h4>
+               {{mss3Selection}}
+             </h4>
+            <p>{{mss3Text}}</p>
+          </div>
+        </div>
+
+        <div class="invert_button">
+          <button
+          v-on:click="invertDisplay"
+          >Run Again</button> 
+        </div>
       </div>
 
     </div>
@@ -89,20 +155,56 @@ export default Vue.extend({
       availableTexts: null, 
       mss1Selection: '',
       mss2Selection: '', 
+      mss3Selection: '',
+      mss1Text: '',
+      mss2Text: '',
+      mss3Text:'',
       calculatedResponse: null
      }
   },
   async mounted() {
     this.availableTexts = await this.getAvailableTexts()
   },
+  watch: {
+    mss1Selection: async function() {
+      let response = await fetch(`https://nt-redaction-api.herokuapp.com/display?mss=${this.mss1Selection}`);
+      let json = await response.json()
+      // console.log(json?.contents)
+      this.mss1Text = json?.contents
+    }, 
+    mss2Selection: async function(newValue, oldValue) {
+      let response = await fetch(`https://nt-redaction-api.herokuapp.com/display?mss=${this.mss2Selection}`);
+      let json = await response.json()
+      // console.log(json?.contents)
+      this.mss2Text = json?.contents
+    },
+     mss3Selection: async function(newValue, oldValue) {
+      let response = await fetch(`https://nt-redaction-api.herokuapp.com/display?mss=${this.mss3Selection}`);
+      let json = await response.json()
+      // console.log(json?.contents)
+      this.mss3Text = json?.contents
+    }
+  },
   methods: { 
     async invertDisplay(){ 
       if(!this.display){
         // TODO some processing to check valid selection of mss
-        let response = await fetch(`https://nt-redaction-api.herokuapp.com/levenshtein?mss1=${this.mss1Selection}&mss2=${this.mss2Selection}`);
+        let response = await fetch(`https://nt-redaction-api.herokuapp.com/levenshtein?mss1=${this.mss1Selection}&mss2=${this.mss2Selection}&mss3=${this.mss3Selection}`);
         let json = await response.json()
-        console.log(json?.manuscripts)
+
+        // console.log(json?.manuscripts)
         this.calculatedResponse = json
+
+        // response = await fetch(`https://nt-redaction-api.herokuapp.com/display?mss=${this.mss1Selection}`);
+        // json = await response.json()
+        // // console.log(json?.contents)
+        // this.mss1Text = json?.contents
+
+        // response = await fetch(`https://nt-redaction-api.herokuapp.com/display?mss=${this.mss2Selection}`);
+        // json = await response.json()
+        // // console.log(json?.contents)
+        // this.mss2Text = json?.contents
+
         this.display = !this.display
       } else {
         this.calculatedResponse = null
@@ -112,8 +214,14 @@ export default Vue.extend({
     async getAvailableTexts() { 
       let response = await fetch("https://nt-redaction-api.herokuapp.com/texts");
       let json = await response.json()
-      console.log(json?.manuscripts)
+      // console.log(json?.manuscripts)
       return json?.manuscripts
+    }, 
+    async displayText(mss: string){ 
+      let response = await fetch(`https://nt-redaction-api.herokuapp.com/display?mss=${mss}`);
+      let json = await response.json()
+      // console.log(json?.contents)
+      return json?.contents
     }
   }
 });
@@ -133,7 +241,7 @@ table, th, td {
   font-size: 14px;
 }
 
-tr:hover {
+th { 
   background-color: lightgray;
 }
 
@@ -169,7 +277,20 @@ select{
   cursor: inherit;
   font-size: 14px;
   line-height: inherit;
+}
 
+h1, h2, h3, h4{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.invert_button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 p {
@@ -179,11 +300,30 @@ p {
 
 button:hover { 
   background: mediumseagreen;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
 button { 
-  padding: 10px;
-  margin: 10px;
+  border-radius: 12px;
+  padding: 15px;
+  margin: 15px;
+
+}
+
+.display_texts{ 
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.display_text{ 
+  border: 2px solid black;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  margin: 15px;
 }
 
 .flex_container{ 
