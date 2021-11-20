@@ -32,10 +32,28 @@
 
         </div>
 
-        <button
-        v-on:click="invertDisplay"
-        >Confirm Selection
-        </button>
+        <div class="display_texts">
+          <div class="display_text">
+            <h4>
+              {{mss1Selection}}
+            </h4>
+            <p>{{mss1Text}}</p>
+          </div>
+           <div class="display_text">
+             <h4>
+               {{mss2Selection}}
+             </h4>
+            <p>{{mss2Text}}</p>
+          </div>
+        </div>
+
+
+        <div class="invert_button">
+          <button
+          v-on:click="invertDisplay"
+          >Confirm Selection
+          </button>
+        </div>
       </div>
 
       <div
@@ -59,9 +77,27 @@
            <td>{{calculatedResponse.levenshtein.values[mss2Selection][mss2Selection]}}</td>
           </tr>
         </table>
-        <button
-        v-on:click="invertDisplay"
-        >Run Again</button> 
+
+        <div class="display_texts">
+          <div class="display_text">
+            <h4>
+              {{mss1Selection}}
+            </h4>
+            <p>{{mss1Text}}</p>
+          </div>
+           <div class="display_text">
+             <h4>
+               {{mss2Selection}}
+             </h4>
+            <p>{{mss2Text}}</p>
+          </div>
+        </div>
+
+        <div class="invert_button">
+          <button
+          v-on:click="invertDisplay"
+          >Run Again</button> 
+        </div>
       </div>
 
     </div>
@@ -89,11 +125,27 @@ export default Vue.extend({
       availableTexts: null, 
       mss1Selection: '',
       mss2Selection: '', 
+      mss1Text: '',
+      mss2Text: '',
       calculatedResponse: null
      }
   },
   async mounted() {
     this.availableTexts = await this.getAvailableTexts()
+  },
+  watch: {
+    mss1Selection: async function() {
+      let response = await fetch(`https://nt-redaction-api.herokuapp.com/display?mss=${this.mss1Selection}`);
+      let json = await response.json()
+      // console.log(json?.contents)
+      this.mss1Text = json?.contents
+    }, 
+    mss2Selection: async function(newValue, oldValue) {
+      let response = await fetch(`https://nt-redaction-api.herokuapp.com/display?mss=${this.mss2Selection}`);
+      let json = await response.json()
+      // console.log(json?.contents)
+      this.mss2Text = json?.contents
+    }
   },
   methods: { 
     async invertDisplay(){ 
@@ -101,8 +153,19 @@ export default Vue.extend({
         // TODO some processing to check valid selection of mss
         let response = await fetch(`https://nt-redaction-api.herokuapp.com/levenshtein?mss1=${this.mss1Selection}&mss2=${this.mss2Selection}`);
         let json = await response.json()
-        console.log(json?.manuscripts)
+        // console.log(json?.manuscripts)
         this.calculatedResponse = json
+
+        // response = await fetch(`https://nt-redaction-api.herokuapp.com/display?mss=${this.mss1Selection}`);
+        // json = await response.json()
+        // // console.log(json?.contents)
+        // this.mss1Text = json?.contents
+
+        // response = await fetch(`https://nt-redaction-api.herokuapp.com/display?mss=${this.mss2Selection}`);
+        // json = await response.json()
+        // // console.log(json?.contents)
+        // this.mss2Text = json?.contents
+
         this.display = !this.display
       } else {
         this.calculatedResponse = null
@@ -112,8 +175,14 @@ export default Vue.extend({
     async getAvailableTexts() { 
       let response = await fetch("https://nt-redaction-api.herokuapp.com/texts");
       let json = await response.json()
-      console.log(json?.manuscripts)
+      // console.log(json?.manuscripts)
       return json?.manuscripts
+    }, 
+    async displayText(mss: string){ 
+      let response = await fetch(`https://nt-redaction-api.herokuapp.com/display?mss=${mss}`);
+      let json = await response.json()
+      // console.log(json?.contents)
+      return json?.contents
     }
   }
 });
@@ -169,7 +238,20 @@ select{
   cursor: inherit;
   font-size: 14px;
   line-height: inherit;
+}
 
+h1, h2, h3, h4{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.invert_button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 p {
@@ -179,11 +261,30 @@ p {
 
 button:hover { 
   background: mediumseagreen;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
 button { 
-  padding: 10px;
-  margin: 10px;
+  border-radius: 12px;
+  padding: 15px;
+  margin: 15px;
+
+}
+
+.display_texts{ 
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.display_text{ 
+  border: 2px solid black;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  margin: 15px;
 }
 
 .flex_container{ 
