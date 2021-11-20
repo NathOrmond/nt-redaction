@@ -95,7 +95,7 @@
            <td>{{calculatedResponse.levenshtein.values[mss2Selection][mss3Selection]}}</td>
           </tr>
           <tr>
-            <th>{{mss2Selection}}</th>
+            <th>{{mss3Selection}}</th>
             <td>{{calculatedResponse.levenshtein.values[mss3Selection][mss1Selection]}}</td>
             <td>{{calculatedResponse.levenshtein.values[mss3Selection][mss2Selection]}}</td>
             <td>{{calculatedResponse.levenshtein.values[mss3Selection][mss3Selection]}}</td>
